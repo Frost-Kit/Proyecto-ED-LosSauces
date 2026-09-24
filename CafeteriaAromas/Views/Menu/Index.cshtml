@@ -1,0 +1,35 @@
+
+@model List<CafeteriaAromas.Models.Product> 
+@{
+    ViewData["Title"] = "Menú";
+}
+
+<div class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-cup-hot"></i> Menú de la Cafetería</h2>
+    </div>
+
+    <!-- Menu -->
+    <section class="row row-cols-1 row-cols-md-3 g-4">
+        <!-- Card (ya luego pngo el foreach) -->
+        @foreach (var proc in Model)
+        {
+            <article class="col">
+                <div class="card h-100 shadow-sm border-1">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">@proc.Name</h5>
+                        <p class="card-text text-muted">Precio: <strong>@proc.SellingPrice bs</strong></p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pb-3">
+                        <form asp-controller="Venta" asp-action="AgregarAlCarrito/Pedido" method="post">
+                            <input type="hidden" name="idProducto" value="1"/>
+                            <button type="submit" class="btn btn-outline-success w-100">
+                                + Agregar al Pedido
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        }
+    </section>
+</div>
