@@ -668,5 +668,6 @@ FodyWeavers.xsd
 # DB temp archives
 *.db-wal
 *.db-shm
-
+#Settings devs
+appsettings.Development.json
 # End of https://www.toptal.com/developers/gitignore/api/linux,rider,visualstudio,visualstudiocode,windows,dotnetcore,aspnetcore
