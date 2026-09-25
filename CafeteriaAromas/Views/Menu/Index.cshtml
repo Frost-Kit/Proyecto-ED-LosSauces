@@ -1,3 +1,4 @@
+@using CafeteriaAromas.Data
 
 @model List<CafeteriaAromas.Models.Product> 
 @{
@@ -7,6 +8,19 @@
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2><i class="bi bi-cup-hot"></i> Menú de la Cafetería</h2>
+        @if (MemoryStore.PenditOrder)
+        {
+            <a class="btn btn-secondary" asp-controller="OrderSale" asp-action="OrdersMenu">Ver Orden &rarr;</a>
+        }
+        else
+        {
+            <form asp-controller="OrderSale" asp-action="NewOrder" method="post" class="d-inline">
+                <button type="submit" class="btn btn-primary">
+                    Nueva Orden
+                </button>
+            </form>
+        }
+        
     </div>
 
     <!-- Menu -->
