@@ -29,3 +29,209 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+
+
+/* ==========================================================================
+   CAFETERÍA AROMAS - HOJA DE ESTILOS SISTEMA MVC
+   ========================================================================== */
+
+/* 1. VARIABLES GLOBALES DE DISEÑO */
+:root {
+  /* Paleta Principal Café Espresso */
+  --bg-main: #F4EBE1;            /* Fondo crema cálido */
+  --nav-bg: #2C1E16;             /* Espresso oscuro */
+  --surface-card: #FFFFFF;      /* Blanco limpio para contenidos */
+
+  /* Tipografía y Textos */
+  --text-primary: #22150C;       /* Café muy oscuro (reemplazo de negro) */
+  --text-muted: #6C584C;         /* Café suave para subtítulos y etiquetas */
+  --text-light: #E6D7C3;         /* Crema claro para fondos oscuros */
+
+  /* Colores de Acompañamiento / Botones */
+  --accent-brown: #8B5E3C;       /* Café tostado principal */
+  --accent-brown-hover: #6F482F;
+  --accent-caramel: #D4A373;     /* Caramelo para acciones clave */
+  --accent-caramel-hover: #BC8A58;
+
+  /* Estados y Alertas */
+  --danger-terracotta: #C05621;  /* Terracota para Cerrar Sesión / Eliminar */
+  --danger-hover: #9C4215;
+  --success-sage: #2D6A4F;       /* Verde para mensajes de éxito */
+}
+
+/* 2. ESTILOS BASE DE LA APLICACIÓN */
+body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+  min-width: 400px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* 3. BARRA DE NAVEGACIÓN (HEADER) */
+.navbar {
+  background-color: var(--nav-bg) !important;
+  border-bottom: 3px solid var(--accent-caramel) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+  color: #FFFFFF !important;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.navbar-nav .nav-link {
+  color: var(--text-light) !important;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--accent-caramel) !important;
+}
+/* Botón Hamburguesa Responsive */
+.navbar-toggler {
+  border-color: var(--accent-caramel) !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(212, 163, 115, 0.35) !important;
+}
+
+/* 4. BOTONES DEL SISTEMA */
+
+/* Botón "Nueva Orden" */
+.btn-nueva-orden {
+  background-color: var(--accent-caramel) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.btn-nueva-orden:hover {
+  background-color: var(--accent-caramel-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Botones generales en estado :focus */
+.btn:focus,
+.btn:focus-visible {
+  border-color: var(--accent-brown) !important;
+  box-shadow: 0 0 0 0.25rem rgba(139, 94, 60, 0.35) !important; /* Brillo café suave */
+  outline: none !important;
+}
+
+/* Botones secundario / "Ver Orden" */
+.btn-secondary {
+  background-color: var(--accent-brown) !important;
+  border-color: var(--accent-brown) !important;
+  color: #FFFFFF !important;
+  font-weight: 600;
+}
+
+
+.btn-secondary:hover {
+  background-color: var(--accent-brown-hover) !important;
+  border-color: var(--accent-brown-hover) !important;
+}
+
+/* Botón "Cerrar Sesión" y Peligro/Eliminar */
+.btn-danger {
+  background-color: var(--danger-terracotta) !important;
+  border-color: var(--danger-terracotta) !important;
+  font-weight: 500;
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-hover) !important;
+  border-color: var(--danger-hover) !important;
+}
+/* :focus */
+.btn-danger:focus,
+.btn-danger:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(192, 86, 33, 0.35) !important; /* Brillo terracota */
+}
+
+/* 5. TARJETAS (CARDS) DEL MENÚ Y PRODUCTOS */
+.card {
+  background-color: var(--surface-card) !important;
+  border: 1px solid rgba(139, 94, 60, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(44, 30, 22, 0.08) !important;
+  border-radius: 12px !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(44, 30, 22, 0.12) !important;
+}
+
+/* Botones "+ Agregar al Pedido" dentro de tarjetas */
+.card .btn-addToOrder {
+  color: var(--accent-brown) !important;
+  border: 1.5px solid var(--accent-brown) !important;
+  background-color: transparent !important;
+  font-weight: 600;
+}
+
+.card .btn-addToOrder:hover {
+  background-color: var(--accent-brown) !important;
+  color: #FFFFFF !important;
+}
+
+/* 6. ESTILOS PARA FORMULARIOS Y LOGIN */
+.form-control, .form-select {
+  border: 1px solid rgba(139, 94, 60, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent-brown);
+  box-shadow: 0 0 0 0.25rem rgba(139, 94, 60, 0.25);
+}
+
+/* 7. ESTILOS PARA TABLAS (para Vistas de Órdenes / Ventas) */
+.table {
+  background-color: var(--surface-card);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table thead {
+  background-color: var(--nav-bg);
+  color: #FFFFFF;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+/* 8. FOOTER */
+footer, .footer {
+  min-width: 400px;
+  background-color: var(--nav-bg) !important;
+  color: var(--text-light) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  margin-top: auto;
+  
+}
