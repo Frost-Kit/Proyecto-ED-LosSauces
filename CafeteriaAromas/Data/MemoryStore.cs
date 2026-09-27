@@ -7,5 +7,5 @@ public static class MemoryStore
 {
     public static bool PenditOrder = false;
     public static Queue<Sale> ActualOrders = new();
-     
+     //c
 }
