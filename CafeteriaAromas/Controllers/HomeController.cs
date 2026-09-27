@@ -1,6 +1,7 @@
 using CafeteriaAromas.Data;
 using Microsoft.AspNetCore.Mvc;
 using CafeteriaAromas.Models;
+using CafeteriaAromas.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -21,8 +22,19 @@ public class HomeController : Controller
     // GET
     public async Task<IActionResult> Index()
     {
-        List<Product> actualProducts = await _dbContext.Products.ToListAsync();
-        return View(actualProducts);
+        var viewModel = new HomeViewModel
+        {
+            TotalProducts = await _dbContext.Products.CountAsync(),
+            TotalSuppliers = await _dbContext.Suppliers.CountAsync(),
+            TotalEmployees = await _dbContext.Employees.CountAsync()
+        };
+
+        return View(viewModel);
+    }
+
+    public IActionResult TestDesign()
+    {
+        return View();
     }
     
     // GET
