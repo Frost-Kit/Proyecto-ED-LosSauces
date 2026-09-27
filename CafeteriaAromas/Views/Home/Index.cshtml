@@ -1,22 +1,50 @@
 ﻿@using System.Security.Claims;
+@using CafeteriaAromas.ViewModels;
+
+@model HomeViewModel;
 
 @{
     ViewData["Title"] = "Inicio";
 }
 
+<div class="container-fluid pt-3 pb-1">
+    <h1 class="h1 mb-4"> Bienvenida/o
+        @User.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault()
+    </h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Vista General</h1>
+        <a asp-controller="Menu" asp-action="Index" class="btn btn-primary btn-m shadow-sm">
+            Ver Menu
+        </a>
+    </div>
 
-<div class="container mt-4">
-    @{
-        if (User.Identity!.IsAuthenticated)
-        {
-            <h1> Bienvenido
-                @User.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).SingleOrDefault()
-            </h1>
-        }
-        else
-        {
-            <div class="alert alet"></div>
-        }
-    }
-    
+    <!-- tarjetas de resumen -->
+    <section class="row g-3 mb-4">
+        <div class="col-xl-4 col-md-6">
+            <article class="card border-start border-4 border-success shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Productos Registrados</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalProducts</div>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <article class="card border-start border-4 border-info shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Proveedores Activos</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalSuppliers</div>
+                </div>
+            </article>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <article class="card border-start border-4 border-warning shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Personal / Empleados</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalEmployees</div>
+                </div>
+            </article>
+        </div>
+    </section>
 </div>
