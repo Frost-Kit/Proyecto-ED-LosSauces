@@ -10,7 +10,7 @@ namespace CafeteriaAromas.Controllers
         // Cola global temporal en memoria del servidor
         private static List<OrderViewModel> ColaDeOrdenes = new List<OrderViewModel>
         {
-            new OrderViewModel { Id = 101, Cliente = "Mesa 3", Detalle = "1x Cappuccino + 1x Brownie de Chocolate", Hora = "10:15 AM", Total = 42.00m, Estado = "Preparando" }
+            new OrderViewModel { Id = 101, Cliente = "Mostrador", Detalle = "1x Cappuccino ", Hora = "10:15 AM", Total = 22.00m, Estado = "Preparando" }
         };
 
         // Muestra la lista en la pantalla de Órdenes/Ventas (por hacer)

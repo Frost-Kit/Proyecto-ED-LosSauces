@@ -4,72 +4,75 @@
     ViewData["Title"] = "Órdenes por Hacer";
 }
 
-<div class="container mt-4 p-4 text-white" style="background-color: #1a0f0a; border-radius: 8px;">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 style="color: #ff9d6c; font-weight: bold; margin: 0;">Órdenes / Ventas por Hacer</h2>
-        <span class="badge" style="background-color: #a85829; font-size: 1rem; padding: 8px 16px;">
-            Pendientes: @Model.Count()
-        </span>
-    </div>
+<!-- Contenedor especial con CSS puro que rompe los límites y estira la tabla hacia tus líneas azules -->
+<div style="position: relative; width: 100vw; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 0 40px;">
+    
+    <div class="p-4" style="background-color: #f4eae1; border-radius: 8px; max-width: 1400px; margin: 0 auto;">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+            <h2 style="color: #4a2c11; font-weight: bold; margin: 0; font-size: 1.8rem;"><i class="bi bi-list-task"></i> Órdenes / Ventas por Hacer</h2>
+            <span class="badge" style="background-color: #d19f77; color: #4a2c11; font-size: 1rem; padding: 8px 16px; font-weight: bold;">
+                Pendientes: @Model.Count()
+            </span>
+        </div>
 
-    <div class="table-responsive">
-        <table class="table text-white" style="background-color: #231610; border-color: #3d281d; vertical-align: middle;">
-            <thead>
-                <tr style="color: #ff9d6c; border-bottom: 2px solid #ff9d6c; background-color: #1e120c;">
-                    <th style="padding: 15px;">Nº</th>
-                    <th style="padding: 15px;">CLIENTE / MESA</th>
-                    <th style="padding: 15px;">DETALLE DEL PEDIDO</th>
-                    <th style="padding: 15px;">HORA INGRESO</th>
-                    <th style="padding: 15px;">TOTAL</th>
-                    <th style="padding: 15px;">ESTADO</th>
-                    <th style="padding: 15px;" class="text-center">ACCIÓN</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ int contador = 1; }
-                @foreach (var orden in Model)
-                {
-                    <tr style="border-bottom: 1px solid #3d281d; background-color: #231610;">
-                        <td style="font-weight: bold; color: #ff9d6c; padding: 15px;">@contador</td>
-                        <td style="padding: 15px;">@orden.Cliente</td>
-                        <td style="padding: 15px; color: #e0d0cc;">@orden.Detalle</td>
-                        <td style="padding: 15px;">@orden.Hora</td>
-                        <td style="padding: 15px; font-weight: bold;">Bs. @orden.Total.ToString("0.00")</td>
-                        <td style="padding: 15px;">
-                            @if (orden.Estado == "Preparando")
-                            {
-                                <span class="badge bg-warning text-dark">@orden.Estado</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-secondary">@orden.Estado</span>
-                            }
-                        </td>
-                        <td class="text-center" style="padding: 15px;">
-                            <!-- El formulario ahora es estándar para todas, el control lo hace C# -->
-                            <form asp-controller="Orders" asp-action="Despachar" method="post" style="display:inline;">
-                                <input type="hidden" name="id" value="@orden.Id" />
-                                
-                                @if (contador == 1)
+        <!-- El cuadro blanco ahora es libre de expandirse horizontalmente sin generar cortes -->
+        <div class="bg-white rounded shadow-sm border" style="border-color: #e0d0c0; overflow: hidden; width: 100%;">
+            <table class="table table-hover align-middle mb-0" style="width: 100%; table-layout: auto;">
+                <thead>
+                    <tr style="background-color: #ebdcd0; color: #4a2c11; border-bottom: 2px solid #d19f77; font-size: 1.05rem;">
+                        <th style="padding: 15px 20px; font-weight: bold; text-align: center;">Nº</th>
+                        <th style="padding: 15px 20px; font-weight: bold;">PEDIDO</th>
+                        <th style="padding: 15px 20px; font-weight: bold;">DETALLE DEL PEDIDO</th>
+                        <th style="padding: 15px 20px; font-weight: bold;">HORA INGRESO</th>
+                        <th style="padding: 15px 20px; font-weight: bold;">TOTAL</th>
+                        <th style="padding: 15px 20px; font-weight: bold; text-align: center;">ESTADO</th>
+                        <th style="padding: 15px 20px; font-weight: bold; text-align: center;">ACCIÓN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int contador = 1; }
+                    @foreach (var orden in Model)
+                    {
+                        <tr style="border-bottom: 1px solid #ebdcd0; background-color: #ffffff; font-size: 1.05rem;">
+                            <td style="font-weight: bold; color: #a85829; padding: 15px 20px; text-align: center;">@contador</td>
+                            <td style="padding: 15px 20px; color: #333333; font-weight: bold;">@orden.Cliente</td>
+                            <td style="padding: 15px 20px; color: #666666;">@orden.Detalle</td>
+                            <td style="padding: 15px 20px; color: #555555;">@orden.Hora</td>
+                            <td style="padding: 15px 20px; font-weight: bold; color: #222222; white-space: nowrap;">Bs. @orden.Total.ToString("0.00")</td>
+                            <td style="padding: 15px 20px; text-align: center;">
+                                @if (orden.Estado == "Preparando")
                                 {
-                                    <!-- Botón normal destacado para la orden activa arriba -->
-                                    <button type="submit" class="btn btn-sm" style="background-color: #a85829; color: white; border: none; padding: 6px 12px; font-weight: bold;">
-                                        Despachar
-                                    </button>
+                                    <span class="badge bg-warning text-dark" style="font-weight: bold; padding: 6px 12px; border-radius: 5px;">@orden.Estado</span>
                                 }
                                 else
                                 {
-                                    <!-- Visualmente se ve más opaco indicando que espera, pero responderá cuando suba -->
-                                    <button type="submit" class="btn btn-sm opacity-50" style="background-color: #a85829; color: white; border: none; padding: 6px 12px; font-weight: bold;">
-                                        Despachar
-                                    </button>
+                                    <span class="badge bg-secondary" style="font-weight: bold; padding: 6px 12px; border-radius: 5px;">@orden.Estado</span>
                                 }
-                            </form>
-                        </td>
-                    </tr>
-                    contador++;
-                }
-            </tbody>
-        </table>
+                            </td>
+                            <td style="padding: 15px 20px; text-align: center; width: 120px;">
+                                <form asp-controller="Orders" asp-action="Despachar" method="post" style="display:inline; margin: 0; padding: 0;">
+                                    <input type="hidden" name="id" value="@orden.Id" />
+                                    
+                                    @if (contador == 1)
+                                    {
+                                        <button type="submit" class="btn btn-sm text-white" style="background-color: #a85829; border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; width: 100%;">
+                                            Despachar
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-sm text-white opacity-50" style="background-color: #a85829; border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; width: 100%;">
+                                            Despachar
+                                        </button>
+                                    }
+                                </form>
+                            </td>
+                        </tr>
+                        contador++;
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
