@@ -31,11 +31,14 @@ public class HomeController : Controller
 
         return View(viewModel);
     }
-
-    public IActionResult TestDesign()
-    {
-        return View();
-    }
+    
+    /// <summary>
+    /// Esto es para probar/ver los cambios en el site.css,
+    /// pueden cambiar la vista (.cshtml) si queren.
+    /// En el link del navegador pongan /Home/TestDesign
+    /// </summary>
+    /// <returns>una vista Razor?</returns>
+    public IActionResult TestDesign() => View();
     
     // GET
     public async Task<IActionResult> QuitSession()
