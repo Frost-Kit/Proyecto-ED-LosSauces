@@ -80,7 +80,7 @@ public class ProductsController : Controller
             return NotFound();
         }
 
-        // Cargar la entidad hacia el ViewModel
+        // se crea la VM pa pasarla a la view
         var viewModel = new ProductViewModel
         {
             Id = product.Id,

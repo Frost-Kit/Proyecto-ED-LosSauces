@@ -19,14 +19,27 @@ public class AccessController : Controller
         _dbContext = dbContext;
     }
     
-    // GET
+    /// <summary>
+    /// GET
+    /// El login, si esta autenticado (que se guadaron las cookies, creo...)
+    /// lo redirige al home, funciona...
+    /// </summary>
+    /// <returns>La view con el login pa que ingrese</returns>
     public IActionResult Login()
     {
-        if (User.Identity!.IsAuthenticated) return RedirectToAction("Index", "Home");
+        if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");
         
         return View();
     }
     
+    /// <summary>
+    /// POST
+    /// Se encarga de procesar el inicio de sesion, comprueba, si existe un usuario/empleado
+    /// con los datos ingresados, si hya lo deja pasar e "inicia sesion" mediante cookies,
+    /// (magia negra)
+    /// </summary>
+    /// <param name="model"> recibe un objeto viewModel correspondiente con los datos de la view</param>
+    /// <returns>Redirige al home</returns>
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
@@ -56,5 +69,10 @@ public class AccessController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    /// <summary>
+    /// Un metodo pal nombre completo del esclavo/empleado
+    /// </summary>
+    /// <param name="employee"></param>
+    /// <returns>una cadena con su nombre completo</returns>
     private string FullName(Employee employee) => $"{employee.FirstName} {employee.LastName}";
 }
