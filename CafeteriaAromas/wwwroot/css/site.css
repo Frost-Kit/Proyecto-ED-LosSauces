@@ -295,3 +295,70 @@ footer, .footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
   margin-top: auto;
 }
+
+/* pa que se quede quieta la che card */
+.card-static,
+.card-static:hover {
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(44, 30, 22, 0.05) !important;
+}
+
+
+/* === pal los dropdown's de nav === */
+
+/* Fondo y bordes del menú desplegable */
+.navbar .dropdown-menu {
+  background-color: var(--surface-card) !important;
+  border: 1px solid rgba(139, 94, 60, 0.2) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 20px rgba(44, 30, 22, 0.15) !important;
+  padding: 0.5rem 0;
+}
+
+/* Encabezado dentro del dropdown */
+.navbar .dropdown-header {
+  color: var(--text-muted) !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  padding: 0.5rem 1.25rem 0.25rem;
+}
+
+/* Opciones de los ítems del menú */
+.navbar .dropdown-item {
+  color: var(--text-primary) !important;
+  font-weight: 500;
+  padding: 0.6rem 1.25rem;
+  transition: all 0.2s ease;
+}
+
+/* Estado Hover (al pasar el cursor) y Focus */
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  background-color: #F8F1EA !important; /* Tono crema suave para destacar */
+  color: var(--accent-brown) !important;
+  padding-left: 1.5rem; /* Efecto sutil de desplazamiento hacia la derecha */
+}
+
+/* Cambiar color de los íconos dentro de las opciones al hacer hover */
+.navbar .dropdown-item:hover i,
+.navbar .dropdown-item:focus i {
+  color: var(--accent-brown) !important;
+}
+
+/* Separador horizontal */
+.navbar .dropdown-divider {
+  border-top: 1px solid rgba(139, 94, 60, 0.15) !important;
+  margin: 0.4rem 0;
+}
+
+/* Flecha del dropdown-toggle alineada al color del texto */
+.navbar-nav .dropdown-toggle::after {
+  color: var(--accent-caramel);
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+/* Rotación sutil de la flecha cuando el menú está abierto */
+.navbar-nav .dropdown-toggle.show::after {
+  transform: rotate(180deg);
+}
