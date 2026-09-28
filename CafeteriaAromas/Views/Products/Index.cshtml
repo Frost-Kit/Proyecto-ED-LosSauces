@@ -1,4 +1,4 @@
-@model List<CafeteriaAromas.ViewModels.ProductViewModel>
+@model List<CafeteriaAromas.ViewModels.ProductListViewModel>
 
 @{
     ViewData["Title"] = "Productos";
@@ -15,7 +15,7 @@
                         Lista de Productos
                     </h1>
                     <a class="btn btn-primary d-inline-flex align-items-center gap-2" 
-                       asp-controller="Product" asp-action="NewProduct">
+                       asp-controller="Products" asp-action="NewProduct">
                         Nuevo Producto
                     </a>
                 </div>
@@ -51,13 +51,13 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="Acciones de producto">
-                                                    <a asp-controller="Product" asp-action="UpdateProduct" 
+                                                    <a asp-controller="Products" asp-action="UpdateProduct" 
                                                        asp-route-id="@proc.Id" 
                                                        class="btn btn-outline-primary" 
                                                        title="Editar producto">
                                                         Editar
                                                     </a>
-                                                    <a asp-controller="Product" 
+                                                    <a asp-controller="Products" 
                                                        asp-action="DeleteProduct" 
                                                        asp-route-id="@proc.Id" 
                                                        onclick="return confirmDelete('@proc.Name')" 
