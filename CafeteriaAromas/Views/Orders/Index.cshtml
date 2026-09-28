@@ -1,0 +1,75 @@
+@model IEnumerable<CafeteriaAromas.ViewModels.OrderViewModel>
+
+@{
+    ViewData["Title"] = "Órdenes por Hacer";
+}
+
+<div class="container mt-4 p-4 text-white" style="background-color: #1a0f0a; border-radius: 8px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="color: #ff9d6c; font-weight: bold; margin: 0;">Órdenes / Ventas por Hacer</h2>
+        <span class="badge" style="background-color: #a85829; font-size: 1rem; padding: 8px 16px;">
+            Pendientes: @Model.Count()
+        </span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table text-white" style="background-color: #231610; border-color: #3d281d; vertical-align: middle;">
+            <thead>
+                <tr style="color: #ff9d6c; border-bottom: 2px solid #ff9d6c; background-color: #1e120c;">
+                    <th style="padding: 15px;">Nº</th>
+                    <th style="padding: 15px;">CLIENTE / MESA</th>
+                    <th style="padding: 15px;">DETALLE DEL PEDIDO</th>
+                    <th style="padding: 15px;">HORA INGRESO</th>
+                    <th style="padding: 15px;">TOTAL</th>
+                    <th style="padding: 15px;">ESTADO</th>
+                    <th style="padding: 15px;" class="text-center">ACCIÓN</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int contador = 1; }
+                @foreach (var orden in Model)
+                {
+                    <tr style="border-bottom: 1px solid #3d281d; background-color: #231610;">
+                        <td style="font-weight: bold; color: #ff9d6c; padding: 15px;">@contador</td>
+                        <td style="padding: 15px;">@orden.Cliente</td>
+                        <td style="padding: 15px; color: #e0d0cc;">@orden.Detalle</td>
+                        <td style="padding: 15px;">@orden.Hora</td>
+                        <td style="padding: 15px; font-weight: bold;">Bs. @orden.Total.ToString("0.00")</td>
+                        <td style="padding: 15px;">
+                            @if (orden.Estado == "Preparando")
+                            {
+                                <span class="badge bg-warning text-dark">@orden.Estado</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@orden.Estado</span>
+                            }
+                        </td>
+                        <td class="text-center" style="padding: 15px;">
+                            <!-- El formulario ahora es estándar para todas, el control lo hace C# -->
+                            <form asp-controller="Orders" asp-action="Despachar" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@orden.Id" />
+                                
+                                @if (contador == 1)
+                                {
+                                    <!-- Botón normal destacado para la orden activa arriba -->
+                                    <button type="submit" class="btn btn-sm" style="background-color: #a85829; color: white; border: none; padding: 6px 12px; font-weight: bold;">
+                                        Despachar
+                                    </button>
+                                }
+                                else
+                                {
+                                    <!-- Visualmente se ve más opaco indicando que espera, pero responderá cuando suba -->
+                                    <button type="submit" class="btn btn-sm opacity-50" style="background-color: #a85829; color: white; border: none; padding: 6px 12px; font-weight: bold;">
+                                        Despachar
+                                    </button>
+                                }
+                            </form>
+                        </td>
+                    </tr>
+                    contador++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
