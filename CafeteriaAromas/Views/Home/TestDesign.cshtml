@@ -1,0 +1,179 @@
+@{
+    ViewData["Title"] = "Prueba de Estilos CSS";
+}
+
+<div class="container-fluid py-4">
+    <!-- Título de Sección -->
+    <section class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">Galería de Componentes y Estilos</h1>
+            <p class="text-muted mb-0">Vista rápida para comprobar la coherencia visual de la Cafetería.</p>
+        </div>
+        <div>
+            <button class="btn btn-primary me-2">
+                Botón Primario
+            </button>
+            <button class="btn btn-secondary me-2">
+                Secundario
+            </button>
+            <button class="btn btn-danger">
+                Peligro
+            </button>
+        </div>
+    </section>
+
+    <!-- 1. TARJETAS DE MÉTRICAS / KPIS -->
+    <h2 class="h5 mb-3 text-muted">1. Indicadores (KPIs)</h2>
+    <section class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-start border-4 border-primary shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Ventas del Mes</div>
+                    <div class="h4 mb-0 font-weight-bold">Bs. 4,250.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-start border-4 border-success shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Productos</div>
+                    <div class="h4 mb-0 font-weight-bold">22</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-start border-4 border-info shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Proveedores</div>
+                    <div class="h4 mb-0 font-weight-bold">6</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-start border-4 border-warning shadow-sm h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Alertas Stock</div>
+                    <div class="h4 mb-0 font-weight-bold">3 Críticos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. PRODUCTOS / CATÁLOGO -->
+    <h2 class="h5 mb-3 text-muted">2. Tarjetas de Productos</h2>
+    <section class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-1">Espresso Doble</h5>
+                    <p class="text-muted small mb-3">Precio: 20.00 Bs</p>
+                    <button class="btn btn-addToOrder w-100">
+                        Agregar al Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-1">Cappuccino</h5>
+                    <p class="text-muted small mb-3">Precio: 22.00 Bs</p>
+                    <button class="btn btn-addToOrder w-100">
+                        Agregar al Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-1">Frapuccino de Caramelo</h5>
+                    <p class="text-muted small mb-3">Precio: 34.00 Bs</p>
+                    <button class="btn btn-addToOrder w-100">
+                        Agregar al Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TABLA Y FORMULARIOS -->
+    <section class="row g-4 mb-4">
+        <!-- Tabla -->
+        <div class="col-lg-8">
+            <h2 class="h5 mb-3 text-muted">3. Tabla de Datos e Historial</h2>
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Listado de Ventas</h6>
+                    <a href="#" class="btn btn-link btn-sm p-0">Ver Historial</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th># Venta</th>
+                                    <th>Fecha</th>
+                                    <th>Cliente</th>
+                                    <th>Estado / Factura</th>
+                                    <th class="text-end">Monto Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#101</td>
+                                    <td>28/09/2026</td>
+                                    <td>Carlos Mendoza</td>
+                                    <td><span class="badge bg-success">Facturado</span></td>
+                                    <td class="text-end font-weight-bold">Bs. 42.00</td>
+                                </tr>
+                                <tr>
+                                    <td>#102</td>
+                                    <td>28/09/2026</td>
+                                    <td>Cliente General</td>
+                                    <td><span class="badge bg-secondary">Sin Factura</span></td>
+                                    <td class="text-end font-weight-bold">Bs. 18.00</td>
+                                </tr>
+                                <tr>
+                                    <td>#103</td>
+                                    <td>27/09/2026</td>
+                                    <td>Lucía Torrez</td>
+                                    <td><span class="badge bg-danger">Agotado</span></td>
+                                    <td class="text-end font-weight-bold">Bs. 65.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario -->
+        <div class="col-lg-4">
+            <h2 class="h5 mb-3 text-muted">4. Controles de Formulario</h2>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Nombre del Insumo</label>
+                        <input type="text" class="form-control" placeholder="Ej. Café en Grano 1Kg">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Categoría</label>
+                        <select class="form-select">
+                            <option selected>Selecciona una opción...</option>
+                            <option value="1">Granos y Café</option>
+                            <option value="2">Lácteos</option>
+                            <option value="3">Jarabes y Endulzantes</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary w-100 mt-2">
+                        Guardar Registro
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
