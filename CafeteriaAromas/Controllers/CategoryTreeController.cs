@@ -37,7 +37,14 @@ public class CategoryTreeController : Controller
                 {
                     foreach (var ingrediente in receta.RecipeSupplies)
                     {
-                        miArbol.AgregarNodo(producto.Name, ingrediente.Supply.Name);
+                        string nombreInsumo = ingrediente.Supply.Name;
+                        decimal cantidadNecesaria = ingrediente.IngredientQuantity;
+                        decimal cantidadDisponible = ingrediente.Supply.StoredQuantity;
+                        string unidad = ingrediente.Supply.UnitOfMeasure;
+                        
+                        string textoNodo = $"{nombreInsumo} (Requiere: {cantidadNecesaria} {unidad} | Stock: {cantidadDisponible} {unidad})";
+                        
+                        miArbol.AgregarNodo(producto.Name, textoNodo);
                     }
                 }
             }
