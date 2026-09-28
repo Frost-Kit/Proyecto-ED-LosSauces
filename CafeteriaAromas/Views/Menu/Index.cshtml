@@ -25,7 +25,6 @@
 
     <!-- Menu -->
     <section class="row row-cols-1 row-cols-md-3 g-4">
-        <!-- Card (ya luego pngo el foreach) -->
         @foreach (var proc in Model)
         {
             <article class="col">
@@ -35,8 +34,13 @@
                         <p class="card-text text-muted">Precio: <strong>@proc.SellingPrice bs</strong></p>
                     </div>
                     <div class="card-footer bg-transparent border-0 pb-3">
-                        <form asp-controller="Venta" asp-action="AgregarAlCarrito/Pedido" method="post">
-                            <input type="hidden" name="idProducto" value="1"/>
+                        <!-- Conectado al controlador Orders y la acción AgregarDesdeMenu -->
+                        <form asp-controller="Orders" asp-action="AgregarDesdeMenu" method="post">
+                            <!-- Datos dinámicos reales del producto del bucle foreach -->
+                            <input type="hidden" name="id" value="@proc.Id"/>
+                            <input type="hidden" name="nombre" value="@proc.Name"/>
+                            <input type="hidden" name="precio" value="@proc.SellingPrice"/>
+                            
                             <button type="submit" class="btn btn-outline-success w-100">
                                 + Agregar al Pedido
                             </button>
