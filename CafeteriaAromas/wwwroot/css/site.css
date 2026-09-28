@@ -39,19 +39,19 @@ body {
 /* 1. VARIABLES GLOBALES DE DISEÑO */
 :root {
   /* Paleta Principal Café Espresso */
-  --bg-main: #F4EBE1;            /* Fondo crema cálido */
-  --nav-bg: #2C1E16;             /* Espresso oscuro */
-  --surface-card: #FFFFFF;      /* Blanco limpio para contenidos */
+  --bg-main: #F4EBE1;             /* Fondo crema cálido */
+  --nav-bg: #2C1E16;              /* Espresso oscuro */
+  --surface-card: #FFFFFF;        /* Blanco limpio para contenidos */
 
   /* Tipografía y Textos */
-  --text-primary: #22150C;       /* Café muy oscuro (reemplazo de negro) */
-  --text-muted: #6C584C;         /* Café suave para subtítulos y etiquetas */
-  --text-light: #E6D7C3;         /* Crema claro para fondos oscuros */
+  --text-primary: #22150C;        /* Café muy oscuro */
+  --text-muted: #6C584C;          /* Café suave para subtítulos y etiquetas */
+  --text-light: #E6D7C3;          /* Crema claro para fondos oscuros */
 
   /* Colores de Acompañamiento / Botones */
-  --accent-brown: #8B5E3C;       /* Café tostado principal */
+  --accent-brown: #8B5E3C;        /* Café tostado principal */
   --accent-brown-hover: #6F482F;
-  --accent-caramel: #D4A373;     /* Caramelo para acciones clave */
+  --accent-caramel: #D4A373;      /* Caramelo para acciones clave */
   --accent-caramel-hover: #BC8A58;
 
   /* Estados y Alertas */
@@ -80,6 +80,18 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+/* Enlaces generales en toda la app */
+a {
+  color: var(--accent-brown);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-brown-hover);
+  text-decoration: underline;
+}
+
 /* 3. BARRA DE NAVEGACIÓN (HEADER) */
 .navbar {
   background-color: var(--nav-bg) !important;
@@ -103,7 +115,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-nav .nav-link.active {
   color: var(--accent-caramel) !important;
 }
-/* Botón Hamburguesa Responsive */
+
 .navbar-toggler {
   border-color: var(--accent-caramel) !important;
 }
@@ -114,11 +126,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 4. BOTONES DEL SISTEMA */
 
-/* Botón "Nueva Orden" */
+/* Botón */
+.btn-primary,
 .btn-nueva-orden {
   background-color: var(--accent-caramel) !important;
+  border-color: var(--accent-caramel) !important;
   color: #FFFFFF !important;
-  border: none !important;
   font-weight: 600;
   padding: 8px 18px;
   border-radius: 6px;
@@ -126,21 +139,21 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.2s ease;
 }
 
+.btn-primary:hover,
 .btn-nueva-orden:hover {
   background-color: var(--accent-caramel-hover) !important;
+  border-color: var(--accent-caramel-hover) !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Botones generales en estado :focus */
 .btn:focus,
 .btn:focus-visible {
   border-color: var(--accent-brown) !important;
-  box-shadow: 0 0 0 0.25rem rgba(139, 94, 60, 0.35) !important; /* Brillo café suave */
+  box-shadow: 0 0 0 0.25rem rgba(139, 94, 60, 0.35) !important;
   outline: none !important;
 }
 
-/* Botones secundario / "Ver Orden" */
 .btn-secondary {
   background-color: var(--accent-brown) !important;
   border-color: var(--accent-brown) !important;
@@ -148,13 +161,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-
 .btn-secondary:hover {
   background-color: var(--accent-brown-hover) !important;
   border-color: var(--accent-brown-hover) !important;
 }
 
-/* Botón "Cerrar Sesión" y Peligro/Eliminar */
 .btn-danger {
   background-color: var(--danger-terracotta) !important;
   border-color: var(--danger-terracotta) !important;
@@ -165,32 +176,62 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--danger-hover) !important;
   border-color: var(--danger-hover) !important;
 }
-/* :focus */
+
 .btn-danger:focus,
 .btn-danger:focus-visible {
-  box-shadow: 0 0 0 0.25rem rgba(192, 86, 33, 0.35) !important; /* Brillo terracota */
+  box-shadow: 0 0 0 0.25rem rgba(192, 86, 33, 0.35) !important;
 }
 
-/* 5. TARJETAS (CARDS) DEL MENÚ Y PRODUCTOS */
+/* Enlaces limpios que parecen botones secundarios/links */
+.btn-link {
+  color: var(--accent-brown) !important;
+  text-decoration: none !important;
+  font-weight: 600;
+}
+
+.btn-link:hover {
+  color: var(--accent-brown-hover) !important;
+  text-decoration: underline !important;
+}
+
+/* 5. TARJETAS (CARDS) Y KPIS */
 .card {
   background-color: var(--surface-card) !important;
-  border: 1px solid rgba(139, 94, 60, 0.2) !important;
-  box-shadow: 0 4px 12px rgba(44, 30, 22, 0.08) !important;
+  border: 1px solid rgba(139, 94, 60, 0.18) !important;
+  box-shadow: 0 4px 12px rgba(44, 30, 22, 0.05) !important;
   border-radius: 12px !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(44, 30, 22, 0.12) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(44, 30, 22, 0.1) !important;
 }
 
-/* Botones "+ Agregar al Pedido" dentro de tarjetas */
+/* Personalización de bordes e íconos en KPIs del Dashboard */
+.border-primary { border-color: var(--accent-caramel) !important; }
+.text-primary   { color: var(--accent-brown) !important; }
+
+.border-success { border-color: var(--accent-brown) !important; }
+.text-success   { color: var(--accent-brown) !important; }
+
+.border-info    { border-color: var(--accent-caramel) !important; }
+.text-info      { color: var(--accent-brown) !important; }
+
+.border-warning { border-color: var(--danger-terracotta) !important; }
+.text-warning   { color: var(--danger-terracotta) !important; }
+
+.text-danger    { color: var(--danger-terracotta) !important; }
+
+/* Botones dentro de tarjetas de productos */
 .card .btn-addToOrder {
   color: var(--accent-brown) !important;
   border: 1.5px solid var(--accent-brown) !important;
   background-color: transparent !important;
   font-weight: 600;
+  border-radius: 6px;
+  padding: 6px 12px;
+  transition: all 0.2s ease;
 }
 
 .card .btn-addToOrder:hover {
@@ -198,7 +239,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF !important;
 }
 
-/* 6. ESTILOS PARA FORMULARIOS Y LOGIN */
+/* 6. FORMULARIOS */
 .form-control, .form-select {
   border: 1px solid rgba(139, 94, 60, 0.3);
   border-radius: 8px;
@@ -210,20 +251,40 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 0 0.25rem rgba(139, 94, 60, 0.25);
 }
 
-/* 7. ESTILOS PARA TABLAS (para Vistas de Órdenes / Ventas) */
+/* 7. TABLAS */
 .table {
   background-color: var(--surface-card);
   border-radius: 8px;
   overflow: hidden;
+  margin-bottom: 0;
 }
 
-.table thead {
-  background-color: var(--nav-bg);
-  color: #FFFFFF;
+.table thead,
+.table-light {
+  background-color: #F8F1EA !important;
+  color: var(--text-primary) !important;
+}
+
+.table th {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .table th, .table td {
   vertical-align: middle;
+}
+
+/* Badges / Etiquetas */
+.badge.bg-danger {
+  background-color: var(--danger-terracotta) !important;
+}
+.badge.bg-success {
+  background-color: var(--success-sage) !important;
+}
+.badge.bg-secondary {
+  background-color: var(--text-muted) !important;
 }
 
 /* 8. FOOTER */
@@ -233,5 +294,4 @@ footer, .footer {
   color: var(--text-light) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
   margin-top: auto;
-  
 }
