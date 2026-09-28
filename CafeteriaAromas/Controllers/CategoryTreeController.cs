@@ -1,12 +1,48 @@
+using CafeteriaAromas.Data;
+using CafeteriaAromas.DataStructures.Clases;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CafeteriaAromas.Controllers;
 
 public class CategoryTreeController : Controller
 {
     // GET
-    public IActionResult Index()
+    private readonly CafeteriaDbContext _dbContext;
+
+    public CategoryTreeController(CafeteriaDbContext dbContext)
     {
-        return View();
+        _dbContext = dbContext;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var categorias = await _dbContext.ProductCategories
+            .Include(c => c.Products)
+            .ThenInclude(p => p.Recipes)
+            .ThenInclude(r => r.RecipeSupplies)
+            .ThenInclude(rs => rs.Supply)
+            .ToListAsync();
+
+        ArbolGeneral<string> miArbol = new ArbolGeneral<string>("Menú de la Cafetería");
+
+        foreach (var categoria in categorias)
+        {
+            miArbol.AgregarNodo("Menú de la Cafetería", categoria.Name);
+            foreach (var producto in categoria.Products)
+            {
+                miArbol.AgregarNodo(categoria.Name, producto.Name);
+                var receta = producto.Recipes.FirstOrDefault();
+                if (receta != null)
+                {
+                    foreach (var ingrediente in receta.RecipeSupplies)
+                    {
+                        miArbol.AgregarNodo(producto.Name, ingrediente.Supply.Name);
+                    }
+                }
+            }
+        }
+
+        return View(miArbol.Raiz);
     }
 }
