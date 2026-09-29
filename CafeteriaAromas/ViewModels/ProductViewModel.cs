@@ -20,13 +20,13 @@ public class ProductViewModel
 
     [Required(ErrorMessage = "El costo de producción es obligatorio.")]
     [Range(0.00, 10000.00, ErrorMessage = "Ingrese un costo válido.")]
-    [Display(Name = "Costo de Producción")]
+    [Display(Name = "Costo de E.")]
     public decimal ProductionCost { get; set; }
 
     [Required(ErrorMessage = "Debe seleccionar una categoría.")]
     [Display(Name = "Categoría")]
     public int ProductCategoryId { get; set; }
 
-    // Propiedad auxiliar para llenar el <select> en la vista
+    // una prop aux para llenar el <select> en la view
     public IEnumerable<SelectListItem>? Categories { get; set; }
 }

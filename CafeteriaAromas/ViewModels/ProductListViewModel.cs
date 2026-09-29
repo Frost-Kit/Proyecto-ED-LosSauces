@@ -7,6 +7,6 @@ public class ProductListViewModel
     public decimal SellingPrice { get; set; }
     public decimal ProductionCost { get; set; }
         
-    // En lugar de traer solo la ID, traes el Nombre de la categoría
+    // en lugar de traer solo la ID, trae/guardo el Nombre de la categoría
     public string CategoryName { get; set; } = string.Empty;
 }
