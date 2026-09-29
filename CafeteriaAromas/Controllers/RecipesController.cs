@@ -18,7 +18,12 @@ public class RecipesController : Controller
         _dbContext = context;
     }
 
-    // 1. CARGA INICIAL Y SELECCIÓN DE PRODUCTO
+    /// <summary>
+    /// GET, para la view principal, carga los datos al viewModel validando si no es vacios
+    /// para iniciarlos y no rompa la aplicacion
+    /// </summary>
+    /// <param name="productId"> es opcional a null asi me ahorro de hacer la sobrecarga</param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Index(int? productId)
     {
@@ -56,7 +61,13 @@ public class RecipesController : Controller
         return View(model);
     }
 
-    // 2. AÑADIR INGREDIENTE A LA LISTA
+    /// <summary>
+    /// Para agregar un nuevo ingrediente a lista de la receta
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="newSupplyId"></param>
+    /// <param name="newQuantity"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> AddIngredient(RecipeManagementViewModel model, int? newSupplyId, decimal? newQuantity)
     {
@@ -81,7 +92,12 @@ public class RecipesController : Controller
         return View("Index", model);
     }
 
-    // 3. ELIMINAR INGREDIENTE DE LA LISTA
+    /// <summary>
+    /// Eliminar el ingrediente selecionaddo, con el indice
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> RemoveIngredient(RecipeManagementViewModel model, int index)
     {
@@ -95,7 +111,11 @@ public class RecipesController : Controller
         return View("Index", model);
     }
 
-    // 4. GUARDAR RECETA FINAL EN BASE DE DATOS
+    /// <summary>
+    /// POST, para guardar la receta en la DB, con sus validaciones respectivas
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> SaveRecipe(RecipeManagementViewModel model)
     {
@@ -147,7 +167,7 @@ public class RecipesController : Controller
     /// <summary>
     /// Para cargar datos necesarion pa los dropdowns, modifica al objeto por referencia
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">Un task que actua sobre el objeto por referencia</param>
     private async Task PopulateDropdowns(RecipeManagementViewModel model)
     {
         var deleteProduct = await ProductsController.GetDeletedIdsAsync();

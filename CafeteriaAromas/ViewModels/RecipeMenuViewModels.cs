@@ -8,9 +8,9 @@ public class RecipeManagementViewModel
     public int RecipeId { get; set; }
     public string Instructions { get; set; } = string.Empty;
     
-    public List<SelectListItem> ProductList { get; set; } 
-    public List<SelectListItem> AvailableSupplies { get; set; }
-    public List<RecipeItemViewModel> Ingredients { get; set; }
+    public List<SelectListItem> ProductList { get; set; } = [];
+    public List<SelectListItem> AvailableSupplies { get; set; } = [];
+    public List<RecipeItemViewModel> Ingredients { get; set; } = [];
 }
 
 

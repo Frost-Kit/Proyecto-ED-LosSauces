@@ -491,5 +491,5 @@ ul.nested-tree li::before {
  /* pa que no pueda modificar el text area*/
 .textarea-fixed {
   resize: none !important;
-  min-height: 220px;
+  min-height: 89% !important;
 }
