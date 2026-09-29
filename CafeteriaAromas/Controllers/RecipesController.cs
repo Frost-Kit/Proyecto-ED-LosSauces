@@ -112,7 +112,7 @@ public class RecipesController : Controller
     }
 
     /// <summary>
-    /// 
+    /// POST, para guardar la receta en la DB, con sus validaciones respectivas
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
@@ -167,7 +167,7 @@ public class RecipesController : Controller
     /// <summary>
     /// Para cargar datos necesarion pa los dropdowns, modifica al objeto por referencia
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">Un task que actua sobre el objeto por referencia</param>
     private async Task PopulateDropdowns(RecipeManagementViewModel model)
     {
         var deleteProduct = await ProductsController.GetDeletedIdsAsync();
