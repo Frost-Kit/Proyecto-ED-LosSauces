@@ -2,24 +2,30 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using CafeteriaAromas.ViewModels;
+using CafeteriaAromas.Data;
+using System.Linq;
 
 namespace CafeteriaAromas.Controllers
 {
     public class OrdersController : Controller
     {
-        // Cola global temporal en memoria del servidor
+        private readonly CafeteriaDbContext _context;
+
+        public OrdersController(CafeteriaDbContext context)
+        {
+            _context = context;
+        }
+
         private static List<OrderViewModel> ColaDeOrdenes = new List<OrderViewModel>
         {
-            new OrderViewModel { Id = 101, Cliente = "Mostrador", Detalle = "1x Cappuccino ", Hora = "10:15 AM", Total = 22.00m, Estado = "Preparando" }
+            new OrderViewModel { Id = 101, Cliente = "Mostrador", Detalle = "1x Cappuccino", Hora = "10:15 AM", Total = 22.00m, Estado = "Preparando" }
         };
 
-        // Muestra la lista en la pantalla de Órdenes/Ventas (por hacer)
         public IActionResult Index()
         {
             return View(ColaDeOrdenes);
         }
 
-        // Recibe los datos enviados desde el formulario de tu menú
         [HttpPost]
         public IActionResult AgregarDesdeMenu(int id, string nombre, decimal precio)
         {
@@ -35,7 +41,6 @@ namespace CafeteriaAromas.Controllers
 
             ColaDeOrdenes.Add(nuevaOrden);
 
-            // Redirige de vuelta al menú para seguir agregando pedidos cómodamente
             return RedirectToAction("Index", "Menu");
         }
 
@@ -44,20 +49,49 @@ namespace CafeteriaAromas.Controllers
         {
             if (ColaDeOrdenes.Count > 0)
             {
-                // Obtenemos de forma estricta la primera orden de la lista (la de arriba)
                 var primeraOrden = ColaDeOrdenes[0];
 
-                // Solo si el ID enviado coincide con la primera de la lista ejecutamos la acción
                 if (primeraOrden.Id == id)
                 {
                     if (primeraOrden.Estado == "En Cola")
                     {
-                        // Primer clic: cambia el estado
+
+                        try
+                        {
+                            string nombreProducto = primeraOrden.Detalle.Replace("1x ", "").Trim();
+
+                            var producto = _context.Products.FirstOrDefault(p => p.Name == nombreProducto);
+
+                            if (producto != null)
+                            {
+                                var receta = _context.Recipes.FirstOrDefault(r => r.ProductId == producto.Id);
+
+                                if (receta != null)
+                                {
+                                    var insumosReceta = _context.RecipeSupplies.Where(rs => rs.RecipeId == receta.Id).ToList();
+
+                                    foreach (var insumoReceta in insumosReceta)
+                                    {
+                                        var insumoStock = _context.Supplies.FirstOrDefault(s => s.Id == insumoReceta.SupplyId);
+                                        if (insumoStock != null)
+                                        {
+                                            insumoStock.StoredQuantity -= insumoReceta.IngredientQuantity;
+                                        }
+                                    }
+
+                                    _context.SaveChanges();
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine("Error al descontar stock: " + ex.Message);
+                        }
+
                         primeraOrden.Estado = "Preparando";
                     }
                     else if (primeraOrden.Estado == "Preparando")
                     {
-                        // Segundo clic: se elimina y la de abajo sube automáticamente
                         ColaDeOrdenes.RemoveAt(0);
                     }
                 }
@@ -65,8 +99,5 @@ namespace CafeteriaAromas.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-
     }
 }
