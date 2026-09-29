@@ -194,6 +194,30 @@ a:hover {
   text-decoration: underline !important;
 }
 
+/* Botones outline propios */
+.btn-outline-brown {
+  color: var(--accent-brown) !important;
+  border: 1.5px solid var(--accent-brown) !important;
+  background-color: transparent !important;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-brown:hover,
+.btn-outline-brown:focus {
+  background-color: var(--accent-brown) !important;
+  color: #FFFFFF !important;
+  border-color: var(--accent-brown) !important;
+  box-shadow: 0 4px 8px rgba(44, 30, 22, 0.15);
+}
+
+.btn-outline-brown:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(139, 94, 60, 0.35) !important;
+  outline: none !important;
+}
+
 /* 5. TARJETAS (CARDS) Y KPIS */
 .card {
   background-color: var(--surface-card) !important;
@@ -462,4 +486,10 @@ ul.nested-tree li::before {
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+ /* pa que no pueda modificar el text area*/
+.textarea-fixed {
+  resize: none !important;
+  min-height: 220px;
 }
