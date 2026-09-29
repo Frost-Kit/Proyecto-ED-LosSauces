@@ -25,11 +25,11 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Menu" asp-action="Index">Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="CategoryTree" asp-action="Index">Árbol
-                            General</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Ordenes/Ventas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Ordenes/Ventas</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="CategoryTree" asp-action="Index">Árbol
+                            General</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" id="configDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,22 +45,17 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex align-items-center gap-2" asp-area="" asp-controller="Employee" asp-action="Index">
-                                    Empleados (por hacer)
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center gap-2" asp-area="" asp-controller="Recipe" asp-action="Index">
-                                    Recetas (si llegamos XD)
+                                <a class="dropdown-item d-flex align-items-center gap-2" asp-area="" asp-controller="Recipes" asp-action="Index">
+                                    Recetas
                                 </a>
                             </li>
                         </ul>
                     </li>
                 </ul>
                 <div class="nav-item">
-                    <a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="QuitSession">Cerrar
-                        Sesion</a>
+                    <a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="QuitSession">
+                        Cerrar Sesión
+                    </a>
                 </div>
             </div>
         </div>
@@ -72,9 +67,20 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
+<footer class="footer py-3 mt-3">
     <div class="container">
-        &copy; 2026 - CafeteriaAromas | UPDS - Los Sauces
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+            <!-- Derechos de autor y marca -->
+            <div class="text-center text-md-start">
+                <span>&copy; 2026 <strong>Cafeteria Aromas</strong>. Todos los derechos reservados.</span>
+            </div>
+
+            <!-- Identificador de sede / entidad -->
+            <div class="d-flex align-items-center gap-1">
+                <span class="badge text-dark fw-bold" style="background-color: var(--accent-caramel);">UPDS</span>
+                <span class="text-muted-light">- Los Sauces</span>
+            </div>
+        </div>
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

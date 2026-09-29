@@ -16,11 +16,20 @@ public class MenuController : Controller
         _dbContext = dbContext;
     }
     
-    // GET
+    /// <summary>
+    /// GET, para la view del menu
+    /// </summary>
+    /// <returns>Una view con su viewModel con los datos cargados</returns>
     public async Task<IActionResult> Index()
     {
-        List<Product> actualProducts = await _dbContext.Products.ToListAsync();
+        var deletedProducts = await ProductsController.GetDeletedIdsAsync();
+        
+        var actualProducts = await _dbContext.Products
+            .Where(p => !deletedProducts.Contains(p.Id))
+            .ToListAsync();
+        
         return View(actualProducts);
     }
+    
     
 }

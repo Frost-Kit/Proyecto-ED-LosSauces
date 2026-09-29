@@ -19,12 +19,17 @@ public class HomeController : Controller
         _dbContext = dbContext;
     }
     
-    // GET
+    /// <summary>
+    /// GET, par la view principal de la app
+    /// </summary>
+    /// <returns>la view con los datos cargados en un viewModel en cuestion</returns>
     public async Task<IActionResult> Index()
     {
+        var deletedProducts = await ProductsController.GetDeletedIdsAsync();
+        
         var viewModel = new HomeViewModel
         {
-            TotalProducts = await _dbContext.Products.CountAsync(),
+            TotalProducts = await _dbContext.Products.Where(p => !deletedProducts.Contains(p.Id)).CountAsync(),
             TotalSuppliers = await _dbContext.Suppliers.CountAsync(),
             TotalEmployees = await _dbContext.Employees.CountAsync()
         };
@@ -37,10 +42,14 @@ public class HomeController : Controller
     /// pueden cambiar la vista (.cshtml) si queren.
     /// En el link del navegador pongan /Home/TestDesign
     /// </summary>
-    /// <returns>una vista Razor?</returns>
+    /// <returns>una vista Razor? o Blazor?</returns>
     public IActionResult TestDesign() => View();
     
-    // GET
+    /// <summary>
+    /// GET, para cerrar la sesion, intente poner esto en AccessController,
+    /// pero se molestaba y no dejaba compilar 
+    /// </summary>
+    /// <returns>Una redireccion al form del login</returns>
     public async Task<IActionResult> QuitSession()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
