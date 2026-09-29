@@ -26,8 +26,8 @@
                         <th style="padding: 15px 20px; font-weight: bold;">DETALLE DEL PEDIDO</th>
                         <th style="padding: 15px 20px; font-weight: bold;">HORA INGRESO</th>
                         <th style="padding: 15px 20px; font-weight: bold;">TOTAL</th>
-                        <th style="padding: 15px 20px; font-weight: bold; text-align: center;">ESTADO</th>
-                        <th style="padding: 15px 20px; font-weight: bold; text-align: center;">ACCIÓN</th>
+                        <th style="padding: 15px 20px; text-align: center; font-weight: bold;">ESTADO</th>
+                        <th style="padding: 15px 20px; text-align: center; font-weight: bold;">ACCIÓN</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,11 +43,11 @@
                             <td style="padding: 15px 20px; text-align: center;">
                                 @if (orden.Estado == "Preparando")
                                 {
-                                    <span class="badge bg-warning text-dark" style="font-weight: bold; padding: 6px 12px; border-radius: 5px;">@orden.Estado</span>
+                                    <span class="badge bg-warning text-dark" style="font-weight: bold; padding: 6px 12px; border-radius: 5px; background-color: #ffc107 !important;">@orden.Estado</span>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-secondary" style="font-weight: bold; padding: 6px 12px; border-radius: 5px;">@orden.Estado</span>
+                                    <span class="badge text-white" style="font-weight: bold; padding: 6px 12px; border-radius: 5px; background-color: #212529 !important;">@orden.Estado</span>
                                 }
                             </td>
                             <td style="padding: 15px 20px; text-align: center; width: 120px;">
@@ -62,7 +62,7 @@
                                     }
                                     else
                                     {
-                                        <button type="submit" class="btn btn-sm text-white opacity-50" style="background-color: #a85829; border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; width: 100%;">
+                                        <button type="submit" class="btn btn-sm text-white opacity-50" style="background-color: #a85829; border: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; width: 100%; cursor: not-allowed;" disabled>
                                             Despachar
                                         </button>
                                     }

@@ -1,11 +1,13 @@
-using CafeteriaAromas.Models;
+using CafeteriaAromas.ViewModels;
+using CafeteriaAromas.DataStructures.Clases;
 
-namespace CafeteriaAromas.Data;
-
-
-public static class MemoryStore
+namespace CafeteriaAromas.Data
 {
-    public static bool PenditOrder = false;
-    public static Queue<Sale> ActualOrders = new();
-     //c
+    public static class MemoryStore
+    {
+        public static bool PenditOrder = false;
+        
+        // Instanciamos tu estructura personalizada utilizando tu interfaz
+        public static ColaDinamica<OrderViewModel> ActualOrders = new ColaDinamica<OrderViewModel>();
+    }
 }

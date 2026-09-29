@@ -16,14 +16,11 @@ namespace CafeteriaAromas.Controllers
             _context = context;
         }
 
-        private static List<OrderViewModel> ColaDeOrdenes = new List<OrderViewModel>
-        {
-            new OrderViewModel { Id = 101, Cliente = "Mostrador", Detalle = "1x Cappuccino", Hora = "10:15 AM", Total = 22.00m, Estado = "Preparando" }
-        };
-
+        // Muestra la lista en la pantalla de Órdenes/Ventas
         public IActionResult Index()
         {
-            return View(ColaDeOrdenes);
+            // Enviamos la lista clonada a la vista para mantener las reglas de encapsulamiento de la materia
+            return View(MemoryStore.ActualOrders.ToList());
         }
 
         [HttpPost]
@@ -31,7 +28,7 @@ namespace CafeteriaAromas.Controllers
         {
             var nuevaOrden = new OrderViewModel
             {
-                Id = ColaDeOrdenes.Count > 0 ? ColaDeOrdenes[ColaDeOrdenes.Count - 1].Id + 1 : 101,
+                Id = MemoryStore.ActualOrders.Size() > 0 ? 101 + MemoryStore.ActualOrders.Size() : 101,
                 Cliente = "Mostrador",
                 Detalle = $"1x {nombre}",
                 Hora = DateTime.Now.ToString("hh:mm tt"),
@@ -39,7 +36,8 @@ namespace CafeteriaAromas.Controllers
                 Estado = "En Cola"
             };
 
-            ColaDeOrdenes.Add(nuevaOrden);
+            // Insertamos usando el Enqueue de tu interfaz personalizada
+            MemoryStore.ActualOrders.Enqueue(nuevaOrden);
 
             return RedirectToAction("Index", "Menu");
         }
@@ -47,25 +45,24 @@ namespace CafeteriaAromas.Controllers
         [HttpPost]
         public IActionResult Despachar(int id)
         {
-            if (ColaDeOrdenes.Count > 0)
+            if (!MemoryStore.ActualOrders.IsEmpty())
             {
-                var primeraOrden = ColaDeOrdenes[0];
+                // Inspeccionamos el primer elemento con el Peek() de tu interfaz
+                var primeraOrden = MemoryStore.ActualOrders.Peek();
 
                 if (primeraOrden.Id == id)
                 {
+                    // PRIMER CLIC: Pasa de "En Cola" a "Preparando" y descuenta de la BD
                     if (primeraOrden.Estado == "En Cola")
                     {
-
                         try
                         {
                             string nombreProducto = primeraOrden.Detalle.Replace("1x ", "").Trim();
-
                             var producto = _context.Products.FirstOrDefault(p => p.Name == nombreProducto);
 
                             if (producto != null)
                             {
                                 var receta = _context.Recipes.FirstOrDefault(r => r.ProductId == producto.Id);
-
                                 if (receta != null)
                                 {
                                     var insumosReceta = _context.RecipeSupplies.Where(rs => rs.RecipeId == receta.Id).ToList();
@@ -75,24 +72,25 @@ namespace CafeteriaAromas.Controllers
                                         var insumoStock = _context.Supplies.FirstOrDefault(s => s.Id == insumoReceta.SupplyId);
                                         if (insumoStock != null)
                                         {
+                                            // Restamos el stock real basándonos en tu receta de la base de datos
                                             insumoStock.StoredQuantity -= insumoReceta.IngredientQuantity;
                                         }
                                     }
-
                                     _context.SaveChanges();
                                 }
                             }
                         }
                         catch (Exception ex)
                         {
-                            System.Diagnostics.Debug.WriteLine("Error al descontar stock: " + ex.Message);
+                            System.Diagnostics.Debug.WriteLine("Error al restar stock: " + ex.Message);
                         }
 
                         primeraOrden.Estado = "Preparando";
                     }
+                    // SEGUNDO CLIC: Se elimina de la cola del mostrador usando Dequeue()
                     else if (primeraOrden.Estado == "Preparando")
                     {
-                        ColaDeOrdenes.RemoveAt(0);
+                        MemoryStore.ActualOrders.Dequeue();
                     }
                 }
             }
