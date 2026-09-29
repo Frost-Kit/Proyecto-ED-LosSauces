@@ -292,8 +292,13 @@ footer, .footer {
   min-width: 400px;
   background-color: var(--nav-bg) !important;
   color: var(--text-light) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 1px solid rgba(212, 163, 115, 0.2) !important;
   margin-top: auto;
+}
+
+.footer .text-muted-light {
+  color: rgba(230, 215, 195, 0.7);
+  font-size: 0.9rem;
 }
 
 /* pa que se quede quieta la che card */
