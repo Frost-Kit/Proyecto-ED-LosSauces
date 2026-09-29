@@ -17,7 +17,6 @@ public class OrderSaleController : Controller
         _dbContext = dbContext;
     }
     
-    // GET
     public IActionResult OrdersMenu()
     {
         var orders = MemoryStore.ActualOrders.ToList();
@@ -27,7 +26,6 @@ public class OrderSaleController : Controller
     [HttpPost]
     public IActionResult NewOrder()
     {
-        // CORRECCIÓN: Creamos el tipo de objeto correcto que espera tu ColaDinamica
         var nuevaOrden = new OrderViewModel
         {
             Id = MemoryStore.ActualOrders.Size() > 0 ? 101 + MemoryStore.ActualOrders.Size() : 101,
@@ -38,7 +36,6 @@ public class OrderSaleController : Controller
             Estado = "En Cola"
         };
 
-        // Insertamos la estructura compatible con tu interfaz de estructuras de datos
         MemoryStore.ActualOrders.Enqueue(nuevaOrden);
         MemoryStore.PenditOrder = true;
         

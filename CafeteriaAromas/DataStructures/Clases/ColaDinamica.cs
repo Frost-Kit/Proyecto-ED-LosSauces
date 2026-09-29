@@ -31,7 +31,7 @@ namespace CafeteriaAromas.DataStructures.Clases
 
         public bool IsEmpty() => _contador == 0;
 
-        public bool IsFull() => false; // Al ser dinámica, no se llena
+        public bool IsFull() => false; 
 
         public void Enqueue(T elemento)
         {
@@ -69,7 +69,6 @@ namespace CafeteriaAromas.DataStructures.Clases
 
         public int Size() => _contador;
 
-        // Método auxiliar para que la vista HTML pueda dibujar la tabla sin romper la Cola
         public List<T> ToList()
         {
             List<T> lista = new List<T>();

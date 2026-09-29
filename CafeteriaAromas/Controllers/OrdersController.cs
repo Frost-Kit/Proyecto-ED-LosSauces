@@ -16,10 +16,8 @@ namespace CafeteriaAromas.Controllers
             _context = context;
         }
 
-        // Muestra la lista en la pantalla de Órdenes/Ventas
         public IActionResult Index()
         {
-            // Enviamos la lista clonada a la vista para mantener las reglas de encapsulamiento de la materia
             return View(MemoryStore.ActualOrders.ToList());
         }
 
@@ -36,7 +34,6 @@ namespace CafeteriaAromas.Controllers
                 Estado = "En Cola"
             };
 
-            // Insertamos usando el Enqueue de tu interfaz personalizada
             MemoryStore.ActualOrders.Enqueue(nuevaOrden);
 
             return RedirectToAction("Index", "Menu");
@@ -47,12 +44,10 @@ namespace CafeteriaAromas.Controllers
         {
             if (!MemoryStore.ActualOrders.IsEmpty())
             {
-                // Inspeccionamos el primer elemento con el Peek() de tu interfaz
                 var primeraOrden = MemoryStore.ActualOrders.Peek();
 
                 if (primeraOrden.Id == id)
                 {
-                    // PRIMER CLIC: Pasa de "En Cola" a "Preparando" y descuenta de la BD
                     if (primeraOrden.Estado == "En Cola")
                     {
                         try
@@ -72,7 +67,6 @@ namespace CafeteriaAromas.Controllers
                                         var insumoStock = _context.Supplies.FirstOrDefault(s => s.Id == insumoReceta.SupplyId);
                                         if (insumoStock != null)
                                         {
-                                            // Restamos el stock real basándonos en tu receta de la base de datos
                                             insumoStock.StoredQuantity -= insumoReceta.IngredientQuantity;
                                         }
                                     }
@@ -87,7 +81,6 @@ namespace CafeteriaAromas.Controllers
 
                         primeraOrden.Estado = "Preparando";
                     }
-                    // SEGUNDO CLIC: Se elimina de la cola del mostrador usando Dequeue()
                     else if (primeraOrden.Estado == "Preparando")
                     {
                         MemoryStore.ActualOrders.Dequeue();
