@@ -12,17 +12,24 @@ namespace CafeteriaAromas.Controllers;
 public class ProductsController : Controller
 {
     private readonly CafeteriaDbContext _dbContext;
-   
+    private const string _filePath = "DeleteProducts.txt";
+
     public ProductsController(CafeteriaDbContext dbContext)
     {
         _dbContext = dbContext;
     }
     
-    // GET: Products
+    /// <summary>
+    /// Get de la view principal, que pide el hast
+    /// </summary>
+    /// <returns></returns>
     public async Task<IActionResult> Index()
     {
+        var deletedIds = await GetDeletedIdsAsync();
+
         var products = await _dbContext.Products
             .Include(p => p.ProductCategory)
+            .Where(p => !deletedIds.Contains(p.Id))
             .Select(p => new ProductListViewModel
             {
                 Id = p.Id,
@@ -121,25 +128,60 @@ public class ProductsController : Controller
         return RedirectToAction(nameof(Index));
     }
      
+    /// <summary>
+    /// Metodo que "elimina" al producto elegido
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> DeleteProduct(int id)
     {
-        var product = await _dbContext.Products.FirstAsync(e => e.Id == id);
-        _dbContext.Products.Remove(product);
-        await _dbContext.SaveChangesAsync();
+        var deletedIds = await GetDeletedIdsAsync();
+        
+        if (deletedIds.Add(id))
+            await System.IO.File.AppendAllLinesAsync(_filePath, new[] { id.ToString() });
+
         return RedirectToAction(nameof(Index));
     }
     
+    // metodos pa seguire el "DRY: Don't Repeat Yourself"
+
     /// <summary>
     /// pa que traiga las categorias al ViewModel, asi no repito codigo
     /// </summary>
     /// <returns></returns>
-    private async Task<IEnumerable<SelectListItem>> GetCategorySelectListAsync() 
-        => await _dbContext.ProductCategories
-                 .Select(c => new SelectListItem
-                 {
-                    Value = c.Id.ToString(),
-                    Text = c.Name
-                 })
-                 .ToListAsync();
+    private async Task<IEnumerable<SelectListItem>> GetCategorySelectListAsync()
+    {
+        return await _dbContext.ProductCategories
+            .Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            })
+            .ToListAsync();
+    }
+    
+    /// <summary>
+    /// Para leer en un hashSet los ids de los productos eliminados, asi los podemos filtar en la LINQ del Index()
+    /// igual pa no repetir codigo
+    /// </summary>
+    /// <returns>Un hashSet de los id de los productos</returns>
+    public static async Task<HashSet<int>> GetDeletedIdsAsync()
+    {
+        HashSet<int> deletedIds = [];
+
+        if (System.IO.File.Exists(_filePath))
+        {
+            var lines = await System.IO.File.ReadAllLinesAsync(_filePath);
+            foreach (var line in lines)
+            {
+                if (int.TryParse(line, out int id))
+                {
+                    deletedIds.Add(id);
+                }
+            }
+        }
+
+        return deletedIds;
+    }
 }
