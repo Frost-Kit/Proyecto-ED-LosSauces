@@ -25,9 +25,11 @@ public class HomeController : Controller
     /// <returns>la view con los datos cargados en un viewModel en cuestion</returns>
     public async Task<IActionResult> Index()
     {
+        var deletedProducts = await ProductsController.GetDeletedIdsAsync();
+        
         var viewModel = new HomeViewModel
         {
-            TotalProducts = await _dbContext.Products.CountAsync(),
+            TotalProducts = await _dbContext.Products.Where(p => !deletedProducts.Contains(p.Id)).CountAsync(),
             TotalSuppliers = await _dbContext.Suppliers.CountAsync(),
             TotalEmployees = await _dbContext.Employees.CountAsync()
         };
