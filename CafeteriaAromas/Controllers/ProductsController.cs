@@ -20,9 +20,11 @@ public class ProductsController : Controller
     }
     
     /// <summary>
-    /// Get de la view principal, que pide el hast
+    /// Get de la view principal, que carga la data de la DB a una lista de ProductsViewModels,
+    /// asi solo se usa lo que necesita la view,
+    /// filtrando tambien los productos que esten en la "lista negra"
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Una view con su viewModel ya con los datos cargdos</returns>
     public async Task<IActionResult> Index()
     {
         var deletedIds = await GetDeletedIdsAsync();
@@ -43,7 +45,10 @@ public class ProductsController : Controller
         return View(products);
     }
     
-    // GET: para nuevos Productos
+    /// <summary>
+    /// GET, pal form de nuevo producto
+    /// </summary>
+    /// <returns>La view con el ViewModel con los items del select para la categoria</returns>
     public async Task<IActionResult> NewProduct()
     {
         var viewModel = new ProductViewModel
@@ -54,7 +59,11 @@ public class ProductsController : Controller
         return View(viewModel);
     }
     
-         
+    /// <summary>
+    /// POST, para agregar un nuevo producto
+    /// </summary>
+    /// <param name="model">el viewModel con los datos ingresados en la view</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> NewProduct(ProductViewModel model)
     {
@@ -77,15 +86,17 @@ public class ProductsController : Controller
         return View(model);
     }
      
-    // GET: Products/UpdateProduct/5
+    /// <summary>
+    /// GET, pal form de actualizar/editar producto
+    /// </summary>
+    /// <param name="id">el id pa buscarlo en DB</param>
+    /// <returns>Una view con el un objeto ProductViewModel con la data necesaria</returns>
     public async Task<IActionResult> UpdateProduct(int id)
     {
         var product = await _dbContext.Products.FindAsync(id);
 
         if (product == null)
-        {
             return NotFound();
-        }
 
         // se crea la VM pa pasarla a la view
         var viewModel = new ProductViewModel
@@ -101,6 +112,14 @@ public class ProductsController : Controller
         return View(viewModel);
     }
      
+    
+    /// <summary>
+    /// POST, que actualiza los datos del producto elegido, con los datos que ponga en el Form
+    /// Con sus validaciones, si el model no es valido Redirecciona de nuevo al form Actualizar
+    /// Si no encuentra al producto redirecciona al NotFound()
+    /// </summary>
+    /// <param name="model">el viewModel necesario</param>
+    /// <returns>Redirecciona a la lista de productos</returns>
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateProduct(ProductViewModel model)
@@ -114,9 +133,7 @@ public class ProductsController : Controller
         var product = await _dbContext.Products.FindAsync(model.Id);
 
         if (product == null)
-        {
             return NotFound();
-        }
         
         product.Name = model.Name;
         product.SellingPrice = model.SellingPrice;
@@ -129,22 +146,22 @@ public class ProductsController : Controller
     }
      
     /// <summary>
-    /// Metodo que "elimina" al producto elegido
+    /// Metodo que "elimina" al producto elegido, solo agrega el id de producto a la "Lista Negra"
     /// </summary>
     /// <param name="id"></param>
-    /// <returns></returns>
+    /// <returns>Un redireccion a la lista</returns>
     [HttpGet]
     public async Task<IActionResult> DeleteProduct(int id)
     {
         var deletedIds = await GetDeletedIdsAsync();
         
         if (deletedIds.Add(id))
-            await System.IO.File.AppendAllLinesAsync(_filePath, new[] { id.ToString() });
+            await System.IO.File.AppendAllLinesAsync(_filePath, [ id.ToString() ]);
 
         return RedirectToAction(nameof(Index));
     }
     
-    // metodos pa seguire el "DRY: Don't Repeat Yourself"
+    // metodos pa seguir el "DRY: Don't Repeat Yourself"
 
     /// <summary>
     /// pa que traiga las categorias al ViewModel, asi no repito codigo
@@ -176,9 +193,7 @@ public class ProductsController : Controller
             foreach (var line in lines)
             {
                 if (int.TryParse(line, out int id))
-                {
                     deletedIds.Add(id);
-                }
             }
         }
 
