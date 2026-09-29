@@ -31,7 +31,7 @@ namespace CafeteriaAromas.DataStructures.Clases
 
         public bool IsEmpty() => _contador == 0;
 
-        public bool IsFull() => false; 
+        public bool IsFull() => false;
 
         public void Enqueue(T elemento)
         {
@@ -50,8 +50,8 @@ namespace CafeteriaAromas.DataStructures.Clases
 
         public T Dequeue()
         {
-            if (IsEmpty()) throw new InvalidOperationException("La cola está vacía.");
-            
+            if (IsEmpty()) throw new InvalidOperationException("La cola esta vacia");
+
             T elemento = _frente.Elemento;
             _frente = _frente.Siguiente;
             _contador--;
@@ -63,7 +63,7 @@ namespace CafeteriaAromas.DataStructures.Clases
 
         public T Peek()
         {
-            if (IsEmpty()) throw new InvalidOperationException("La cola está vacía.");
+            if (IsEmpty()) throw new InvalidOperationException("La cola esta vacia");
             return _frente.Elemento;
         }
 
