@@ -25,7 +25,7 @@ public class MenuController : Controller
         var deletedProducts = await ProductsController.GetDeletedIdsAsync();
         
         var actualProducts = await _dbContext.Products
-            .Where(p => deletedProducts.Contains(p.Id))
+            .Where(p => !deletedProducts.Contains(p.Id))
             .ToListAsync();
         
         return View(actualProducts);
