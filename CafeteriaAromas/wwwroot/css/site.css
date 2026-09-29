@@ -362,3 +362,99 @@ footer, .footer {
 .navbar-nav .dropdown-toggle.show::after {
   transform: rotate(180deg);
 }
+
+
+/*Cambios en el estilo para el arbol unicamente*/
+.text-caramel { color: var(--accent-caramel) !important; }
+.text-brown { color: var(--accent-brown) !important; }
+.text-sage { color: var(--success-sage) !important; }
+
+ul.tree-ui {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.nested-tree {
+  list-style-type: none;
+  padding-left: 32px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border-left: 2px solid rgba(212, 163, 115, 0.3);
+  display: none;
+}
+
+ul.nested-tree li {
+  margin: 6px 0;
+  position: relative;
+}
+
+ul.nested-tree li::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -2px;
+  width: 16px;
+  border-top: 2px solid rgba(212, 163, 115, 0.3);
+}
+
+.tree-node-wrapper, .tree-leaf-wrapper {
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.tree-node-wrapper:hover, .tree-leaf-wrapper:hover {
+  background-color: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+
+.tree-node-wrapper:hover .tree-caret,
+.tree-leaf-wrapper:hover .tree-leaf,
+.tree-node-wrapper:hover .tree-caret i,
+.tree-leaf-wrapper:hover .tree-leaf i {
+  color: var(--bs-black) !important;
+  transition: color 0.2s ease;
+}
+
+.tree-caret {
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.tree-caret::before {
+  content: "\25B6";
+  font-size: 0.75rem;
+  color: var(--accent-brown);
+  margin-right: 12px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tree-caret:hover {
+  color: var(--accent-caramel-hover) !important;
+}
+
+.tree-caret-down::before {
+  transform: rotate(90deg);
+}
+
+.tree-leaf {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 24px;
+}
+
+.active-tree {
+  display: block !important;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

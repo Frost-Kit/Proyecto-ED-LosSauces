@@ -1,123 +1,87 @@
 @using CafeteriaAromas.DataStructures.Clases
 @model NodoGeneral<string>
 @{
-    ViewData["Title"] = "Árbol de Categorías";
+    ViewData["Title"] = "Menú por categorías";
 }
 
-<style>
-    ul.tree-ui {
-        list-style-type: none;
-    }
-
-    ul.tree-ui, ul.tree-ui ul {
-        margin: 0;
-        padding: 0;
-    }
-
-    ul.tree-ui ul {
-        padding-left: 20px;
-        border-left: 2px dashed var(--accent-caramel);
-        margin-left: 10px;
-        display: none;
-    }
-
-    ul.tree-ui li {
-        margin: 5px 0;
-        padding-left: 15px;
-        position: relative;
-    }
-
-    ul.tree-ui li::before {
-        content: '';
-        position: absolute;
-        top: 12px;
-        left: 0;
-        width: 12px;
-        border-top: 2px dashed var(--accent-caramel);
-    }
-
-    .tree-caret {
-        cursor: pointer;
-        user-select: none;
-        color: var(--text-primary);
-        font-weight: 600;
-        transition: color 0.2s;
-    }
-
-    .tree-caret::before {
-        content: "\25B6";
-        color: var(--accent-brown);
-        display: inline-block;
-        margin-right: 6px;
-        transition: transform 0.2s;
-    }
-
-    .tree-caret:hover {
-        color: var(--accent-caramel-hover);
-    }
-
-    .tree-caret-down::before {
-        transform: rotate(90deg);
-    }
-
-    .tree-leaf {
-        color: var(--text-muted);
-        font-weight: 500;
-    }
-
-    .active-tree {
-        display: block !important;
-    }
-</style>
-
-<div class="container my-4">
-    <div class="card shadow-sm border-0">
-        <div class="card-header bg-white border-bottom pt-4 pb-2">
-            <h2 class="h4 text-dark"><i class="bi bi-diagram-3"></i> Menú por categorías</h2>
+<div class="container my-5">
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden card-static">
+        <div class="card-header bg-white border-bottom pt-4 pb-3 px-4 d-flex align-items-center">
+            <div class="text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                 style="width: 48px; height: 48px; background-color: var(--accent-brown);">
+                <i class="bi bi-diagram-3 fs-4"></i>
+            </div>
+            <h2 class="h4 text-dark mb-0 fw-bold">@ViewData["Title"]</h2>
         </div>
-        <div class="card-body p-4">
 
+        <div class="card-body p-4 p-md-5 bg-transparent">
             @{
-                void RenderTree(NodoGeneral<string> nodo)
+                // Agregamos "nivel" para saber en qué parte del árbol estamos
+                void RenderTree(NodoGeneral<string> nodo, int nivel = 0)
                 {
+                    // 1. Asignamos clases dinámicas según la profundidad y el contenido
+                    string iconClass = nivel switch
+                    {
+                        0 => "bi-shop text-dark", // Raíz
+                        1 => "bi-tags-fill text-caramel", // Categorías
+                        2 => "bi-cup-hot-fill text-brown", // Productos
+                        _ => nodo.Valor.StartsWith("Instrucciones:") // Nivel final
+                            ? "bi-card-text text-info" // Ícono de texto para la receta
+                            : "bi-box-seam text-sage" // Ícono de caja para el ingrediente
+                    };
+
+                    string textClass = nivel switch
+                    {
+                        0 => "fs-4 fw-bold text-dark",
+                        1 => "fs-5 fw-semibold text-dark",
+                        2 => "fs-6 fw-bold text-secondary",
+                        _ => "fs-6 text-muted"
+                    };
+
                     if (nodo.Hijos != null && nodo.Hijos.Count > 0)
                     {
-                        <span class="tree-caret fs-5">@nodo.Valor</span>
-                        <ul class="nested">
-                            @foreach (var hijo in nodo.Hijos)
-                            {
-                                <li>
-                                    @{ RenderTree(hijo); }
-                                </li>
-                            }
-                        </ul>
+                        <div class="tree-node-wrapper my-1">
+                            <span class="tree-caret @textClass">
+                                <i class="bi @iconClass me-2"></i>@nodo.Valor
+                            </span>
+                            <ul class="nested-tree">
+                                @foreach (var hijo in nodo.Hijos)
+                                {
+                                    <li>
+                                        @{ RenderTree(hijo, nivel + 1); }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
                     }
                     else
                     {
-                        <span class="tree-leaf"><i class="bi bi-dot"></i> @nodo.Valor</span>
+                        <div class="tree-leaf-wrapper my-1">
+                            <span class="tree-leaf @textClass">
+                                <i class="bi @iconClass me-2"></i>@nodo.Valor
+                            </span>
+                        </div>
                     }
                 }
             }
 
-            <ul class="tree-ui mt-2">
+            <ul class="tree-ui">
                 <li>
-                    @{ RenderTree(Model); }
+                    @{ RenderTree(Model, 0); }
                 </li>
             </ul>
-
         </div>
     </div>
 </div>
 
 @section Scripts {
     <script>
-
         document.addEventListener("DOMContentLoaded", function () {
-            var toggler = document.getElementsByClassName("tree-caret");
-            for (var i = 0; i < toggler.length; i++) {
+            let toggler = document.getElementsByClassName("tree-caret");
+            for (let i = 0; i < toggler.length; i++) {
                 toggler[i].addEventListener("click", function () {
                     this.classList.toggle("tree-caret-down");
-                    var nestedList = this.nextElementSibling;
+                    let nestedList = this.nextElementSibling;
                     if (nestedList) {
                         nestedList.classList.toggle("active-tree");
                     }
