@@ -61,6 +61,8 @@ public class RecipesController : Controller
     public async Task<IActionResult> AddIngredient(RecipeManagementViewModel model, int? newSupplyId, decimal? newQuantity)
     {
         await PopulateDropdowns(model);
+        
+        model.Ingredients ??= [];
 
         if (newSupplyId.HasValue && newQuantity.HasValue && newQuantity > 0)
         {
